@@ -31,4 +31,6 @@ sequenceDiagram
     activate server
     server-->>browser: status code 302
     deactivate server
+
+    Note right of browser: The server responds with HTTP status code 302
 ``` 
