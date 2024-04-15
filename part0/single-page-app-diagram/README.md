@@ -3,7 +3,7 @@ sequenceDiagram
 participant browser
 participant server
 
-browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
+browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa
 activate server
 server-->>browser: HTML document
 deactivate server
@@ -13,7 +13,7 @@ activate server
 server-->>browser: the css file
 deactivate server
 
-browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.js
+browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa.js
 activate server
 server-->>browser: the JavaScript file
 deactivate server
@@ -26,13 +26,5 @@ server-->>browser: [{ "content": "HTML is easy", "date": "2023-1-1" }, ... ]
 deactivate server
 
 Note right of browser: The browser executes the callback function that renders the notes
-
-browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
-activate server
-server-->>browser: server responds with status code 201 created
-deactivate server
-
-Note right of browser: server does not ask for a redirect, the browser stays on the same page, and it sends no further HTTP requests.
-
 
 ```
