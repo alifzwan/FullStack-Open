@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
+import personsService from './services/persons'
 import Person from './components/Person'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
@@ -10,11 +11,11 @@ import PersonForm from './components/PersonForm'
 // 2.8: The Phonebook Step 3
 // 2.9*: The Phonebook Step 4
 // 2.10: The Phonebook Step 5
-
-
-
-
-
+// 2.11: The Phonebook Step 6
+// 2.12: The Phonebook step 7
+// 2.13: The Phonebook step 8
+// 2.14: The Phonebook step 9
+// 2.15*: The Phonebook step 10
 
 const App = () => {
   
@@ -22,18 +23,15 @@ const App = () => {
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
     const [searchName, setSearchName] = useState('')
+    
 
-    // 2.11: The Phonebook Step 6
     useEffect(() => {
       console.log('Effect')
-      
-      axios
-        .get('http://localhost:3001/persons')
-        .then(response => {
-          console.log('promise fulfilled')
-          setPersons(response.data)
+      personsService
+        .getAll()
+        .then(initialPersons => {
+          setPersons(initialPersons)
         })
-     
     }, [])
     
     console.log('render', persons.length, 'persons')
@@ -41,22 +39,45 @@ const App = () => {
 
     const addPerson = (event) => {
       event.preventDefault()
-      const nameExists = persons.some(person => person.name === newName ) // Check if name already exists in phonebook
-      const numberExists = persons.some(person => person.number === newNumber ) // Check if number already exists in phonebook
+      const personExists = persons.find(person => person.name === newName ) // Check if name already exists in phonebook
+      
 
-      if (nameExists) { // If name already exists, alert user
-        alert(`${newName} is already added to phonebook`)
-      } else if(numberExists) { // If number already exists, alert user
-        alert(`${newNumber} is already added to phonebook`)
+      if (personExists) { 
+          const result = window.confirm(`${newNumber} is already added to phonebook, replace the old number with a new one?`)
+            if (result){
+              const changedPerson = {...personExists, number: newNumber}
+              personsService
+                .update(personExists.id, changedPerson)
+                .then(returnedPerson => {
+                  setPersons(persons.map(person => person.id !== personExists.id ? person : returnedPerson))
+                })
+            }
+      } else {
+          personsService
+            .create({name: newName, number: newNumber})
+            .then(returnedPerson => {
+              setPersons(persons.concat(returnedPerson))
+            })
+        setNewName('') 
+        setNewNumber('') 
       }
-        else { // If name does not exist, add name to phonebook
-        setPersons(persons.concat({name: newName, number: newNumber})) 
-        setNewName('') // Clear input field
-        setNewNumber('') // Clear input field
-      }
-
     }
 
+    const deletePerson = (id) => {
+      console.log('delete person' + id + ' needs to be toggled')
+      const person = persons.find(n => n.id === id)
+      console.log(person)
+      if (person){
+        const result = window.confirm(`Delete ${person.name}?`)
+        if (result) {
+          personsService
+            .remove(id)
+            .then(response => {
+              setPersons(persons.filter(person => person.id !== id))
+            })
+        }
+      }
+    }
 
 
     const handleNameChange = (event) => {
@@ -95,7 +116,15 @@ const App = () => {
 
             
             <h2>Numbers</h2>
-            <Person persons={filteredPersons}/>
+            
+            {filteredPersons.length > 0 ? (
+              <Person 
+                persons={filteredPersons}
+                onClick={deletePerson}
+              />
+            ) : (
+              <p>There is no person here</p>
+            )}
             
         </div>
     )
