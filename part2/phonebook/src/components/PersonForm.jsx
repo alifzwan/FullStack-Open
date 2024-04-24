@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-const PersonForm = ({ onSubmit, nameValue, nameChange, numberValue, numberChange }) => {
+const PersonForm = ({ onSubmit,  nameValue, numberValue, nameChange, numberChange}) => {
     return (
         <div>
             <form onSubmit={onSubmit}>
