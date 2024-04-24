@@ -1,10 +1,10 @@
 import React from 'react'
 
-const Person = ({ filteredPersons }) => {
+const Person = ({ persons }) => {
   return (
     <div>
       <ul>
-        {filteredPersons.map((person) => 
+        {persons.map((person) => 
           <li key={person.id}>{person.name} {person.number} </li>
         )}
       </ul>
