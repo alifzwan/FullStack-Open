@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
-
+import noteService from './services/notes'
 import Note from './components/Note'
+import Notification from './components/Notification'
 
 //* useEffect - used to perfom side effects(data fetching) in function components
 
@@ -9,16 +10,16 @@ const App = () => {
   const [notes, setNotes] = useState([])
   const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(true)
+  const [errorMessage, setErrorMessage] = useState('some error occured...')
 
   // get() - fetches the data
   useEffect(() => {
     console.log('effect')
 
-    axios
-      .get('http://localhost:3001/notes')
-      .then(response => {
-        console.log('promise fulfilled')
-        setNotes(response.data)
+    noteService
+      .getAll()
+      .then(initialNotes => {
+        setNotes(initialNotes)
       })
   }, [])
   
@@ -30,10 +31,10 @@ const App = () => {
       content: newNote,
       important: Math.random() < 0.5,
     }
-    axios
-      .post('http://localhost:3001/notes', noteObject)
-      .then(response => {
-        setNotes(notes.concat(response.data))
+    noteService
+      .create(noteObject)
+      .then(returnedNote => {
+        setNotes(notes.concat(returnedNote))
         setNewNote('')
       })
   }
@@ -42,16 +43,24 @@ const App = () => {
   const toggleImportanceOf = (id) => {
     console.log(`importance of ${id} needs to be toggled`)
 
-    const url = `http://localhost:3001/notes/${id}` // url of the note to be updated
 
     const note = notes.find(n => n.id === id) // find the note to be updated
 
     const changeNote = { ...note, important: !note.important }  // create a new object with the updated importance
 
-    axios // send a put request to the server
-      .put(url, changeNote) 
-      .then(response => { 
-        setNotes(notes.map(n => n.id !== id ? n : response.data)) 
+    noteService // send a put request to the server
+      .update(id, changeNote) 
+      .then(returnedNote => { 
+        setNotes(notes.map(n => n.id !== id ? n : returnedNote)) 
+      })
+      .catch(error => {
+        setErrorMessage(
+          `Note '${note.content}' was already removed from server`
+        )
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+        setNotes(notes.filter(n => n.id !== id))
       })
   }
 
@@ -72,6 +81,7 @@ const App = () => {
     <div>
 
       <h1>Notes</h1>
+      <Notification message={errorMessage}/>
       <div>
         <button onClick={() => setShowAll(!showAll)}>
           show {showAll ? 'important' : 'all' }
