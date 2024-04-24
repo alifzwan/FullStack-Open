@@ -3,9 +3,11 @@ import axios from 'axios'
 
 import Note from './components/Note'
 
+//* useEffect - used to perfom side effects(data fetching) in function components
+
 const App = () => {
   const [notes, setNotes] = useState([])
-  const [newNote, setNewNote] = useState('a new note..')
+  const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(true)
 
 
@@ -28,10 +30,12 @@ const App = () => {
     const noteObject = {
       content: newNote,
       important: Math.random() < 0.5,
-      id: notes.length + 1,
     }
-    setNotes(notes.concat(noteObject))
-    setNewNote('')
+    axios
+      .post('http://localhost:3001/notes', noteObject)
+      .then(response => {
+        console.log(response)
+      })
   }
 
   const handleNoteChange = (event) => {
