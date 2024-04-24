@@ -10,7 +10,7 @@ const App = () => {
   const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(true)
 
-
+  // get() - fetches the data
   useEffect(() => {
     console.log('effect')
 
@@ -21,10 +21,9 @@ const App = () => {
         setNotes(response.data)
       })
   }, [])
-
-  console.log('render', notes.length, 'notes')
   
 
+  // post() - creates a new resource
   const addNote = (event) => {
     event.preventDefault()
     const noteObject = {
@@ -34,9 +33,31 @@ const App = () => {
     axios
       .post('http://localhost:3001/notes', noteObject)
       .then(response => {
-        console.log(response)
+        setNotes(notes.concat(response.data))
+        setNewNote('')
       })
   }
+
+  // put() - updates the resource
+  const toggleImportanceOf = (id) => {
+    console.log(`importance of ${id} needs to be toggled`)
+
+    const url = `http://localhost:3001/notes/${id}` // url of the note to be updated
+
+    const note = notes.find(n => n.id === id) // find the note to be updated
+
+    const changeNote = { ...note, important: !note.important }  // create a new object with the updated importance
+
+    axios // send a put request to the server
+      .put(url, changeNote) 
+      .then(response => { 
+        setNotes(notes.map(n => n.id !== id ? n : response.data)) 
+      })
+  }
+
+
+
+
 
   const handleNoteChange = (event) => {
     console.log(event.target.value)
@@ -58,7 +79,11 @@ const App = () => {
       </div>
       <ul>
         {notesToShow.map((note) => (
-          <Note key={note.id} note={note} />
+          <Note 
+            key={note.id} 
+            note={note} 
+            toggleImportance={() => toggleImportanceOf(note.id)}
+          />
         ))}
       </ul>
 
