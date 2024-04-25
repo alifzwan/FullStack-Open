@@ -1,4 +1,5 @@
-const http = require('http') // Import the http module. NodeJS use CommonJS module
+const express = require('express') // Import the Express.js library
+const app = express() // Create an instance of Express application
 
 let notes = [
     {
@@ -16,22 +17,19 @@ let notes = [
       content: "GET and POST are the most important methods of HTTP protocol",
       important: true
     }
-  ]
+]
 
-  const app = http.createServer((request, response) => {
-    response.writeHead(200, { 'Content-Type': 'application/json' }) // Set the response header(status code, content type)
-    response.end(JSON.stringify(notes)) // Convert the notes array to a JSON string and return it to the client
-  })
+// Define a route handler for the default home page '/'
+app.get('/', (request, response) => { 
+    response.send('<h1>Hello World!</h1>') // Send a response to the client
+})
 
+// Define a route handler for the /api/notes endpoint
+app.get('/api/notes', (request, response) => {
+    response.json(notes) // Send the notes array as a JSON response
+})
 
-
-// request - contains informaton about the client's request
-// response - used to return data to the client
-// const app = http.createServer(( request, response ) => { // Create a server
-//     response.writeHead(200, { 'Content-Type': 'text/plain' }) // Set the response header(status code, content type)
-//     response.end('Hello World')
-// })
-
-const PORT = 3001 // Port the server listens on
-app.listen(PORT) // Start the server
-console.log(`Server running on port ${PORT}`) 
+const PORT = 3001
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`)
+})
