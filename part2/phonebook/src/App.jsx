@@ -4,6 +4,7 @@ import personsService from './services/persons'
 import Person from './components/Person'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
+import Notification from './components/Notification'
 
 
 // 2.6: The Phonebook Step 1
@@ -23,6 +24,15 @@ const App = () => {
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
     const [searchName, setSearchName] = useState('')
+    const [notification, setNotification] = useState('')
+
+
+    const showMessage = (message) => {
+      setNotification(message)
+      setTimeout(() => {
+        setNotification(null)
+      }, 5000)
+    }
     
 
     useEffect(() => {
@@ -50,6 +60,7 @@ const App = () => {
                 .update(personExists.id, changedPerson)
                 .then(returnedPerson => {
                   setPersons(persons.map(person => person.id !== personExists.id ? person : returnedPerson))
+                  showMessage(`Updated ${newName}`)
                 })
             }
       } else {
@@ -57,6 +68,7 @@ const App = () => {
             .create({name: newName, number: newNumber})
             .then(returnedPerson => {
               setPersons(persons.concat(returnedPerson))
+              showMessage(`Added ${newName}`)
             })
         setNewName('') 
         setNewNumber('') 
@@ -101,6 +113,7 @@ const App = () => {
     return (
         <div>
             <h2>Phonebook</h2>
+            <Notification message={notification}/>
             <Filter value={searchName} onChange={handleSearchChange}/>
 
 
