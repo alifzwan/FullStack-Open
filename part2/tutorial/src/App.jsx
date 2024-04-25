@@ -3,6 +3,7 @@ import axios from 'axios'
 import noteService from './services/notes'
 import Note from './components/Note'
 import Notification from './components/Notification'
+import Footer from './components/Footer'
 
 //* useEffect - used to perfom side effects(data fetching) in function components
 
@@ -10,7 +11,7 @@ const App = () => {
   const [notes, setNotes] = useState([])
   const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(true)
-  const [errorMessage, setErrorMessage] = useState('some error occured...')
+  const [errorMessage, setErrorMessage] = useState('some error occurs...')
 
   // get() - fetches the data
   useEffect(() => {
@@ -53,7 +54,7 @@ const App = () => {
       .then(returnedNote => { 
         setNotes(notes.map(n => n.id !== id ? n : returnedNote)) 
       })
-      .catch(error => {
+      .catch((error) => {
         setErrorMessage(
           `Note '${note.content}' was already removed from server`
         )
@@ -81,7 +82,7 @@ const App = () => {
     <div>
 
       <h1>Notes</h1>
-      <Notification message={errorMessage}/>
+      <Notification message={errorMessage} />
       <div>
         <button onClick={() => setShowAll(!showAll)}>
           show {showAll ? 'important' : 'all' }
@@ -102,6 +103,7 @@ const App = () => {
         <input value={newNote} onChange={handleNoteChange}/>
         <button type="submit">save</button>
       </form>
+      <Footer />
     </div>
   )
 }
