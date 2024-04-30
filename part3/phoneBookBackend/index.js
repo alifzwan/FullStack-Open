@@ -6,6 +6,9 @@ app.use(express.json())
 // 3.2: Phonebook backend step 2
 // 3.3: Phonebook backend step 3
 // 3.4: Phonebook backend step 4
+// 3.5: Phonebook backend step 5
+// 3.6: Phonebook backend step 6
+
 
 
 
@@ -85,7 +88,7 @@ app.post('/api/persons', (request, response) => { // Define a route handler for 
         })
     }else if(persons.find(person => person.name === body.name)) { // If the name already exists, return an error
         return response.status(400).json({
-            error:'name must be unique'
+            error:'The name already exists in the phonebook'
         })
     }
 
