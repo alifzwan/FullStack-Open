@@ -1,7 +1,9 @@
 const express = require('express') // Import the Express.js library
 const app = express() // Create an instance of Express application
+const cors = require('cors') // Import cors
 
-app.use(express.json()) // Enable the use of JSON data in the request body
+// app.use(express.json()) // Enable the use of JSON data in the request body
+app.use(cors()) // Use cors to allow requests from other origins
 
 let notes = [
     {
