@@ -1,10 +1,11 @@
 const express = require('express') // Import the Express.js library
 const app = express() // Create an instance of Express application
-const cors = require('cors') // Import cors
+// const cors = require('cors') // Import cors
 
 // app.use(express.json()) // Enable the use of JSON data in the request body
 
-app.use(cors()) // Use cors to allow requests from other origins
+// app.use(cors()) // Use cors to allow requests from other origins
+app.use(express.static('dist'))
 
 let notes = [
     {
@@ -80,7 +81,7 @@ app.post('/api/notes', (request, response) => {
 
 
 
-const PORT = process.env.PORT || 3001
+const PORT = 3001
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })
