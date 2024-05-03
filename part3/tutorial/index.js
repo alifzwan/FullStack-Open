@@ -3,6 +3,7 @@ const app = express() // Create an instance of Express application
 const cors = require('cors') // Import cors
 
 // app.use(express.json()) // Enable the use of JSON data in the request body
+
 app.use(cors()) // Use cors to allow requests from other origins
 
 let notes = [
@@ -79,17 +80,7 @@ app.post('/api/notes', (request, response) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })
