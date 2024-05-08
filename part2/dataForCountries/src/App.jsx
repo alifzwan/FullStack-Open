@@ -11,7 +11,6 @@ const App = () => {
   const [countries, setCountries] = useState([])
   const [searchCountry, setSearchCountry] = useState('')
 
-
   useEffect(() => {
     countriesService.getAll()
       .then(data => {
@@ -19,7 +18,8 @@ const App = () => {
         console.log(data)
       })
   }, [])
-  
+
+
   const handleSearchChange = (event) => {
     setSearchCountry(event.target.value)
   }
@@ -38,7 +38,12 @@ const App = () => {
         // if there are 2-10 countries that match the search, the names of the countries are displayed
         filteredCountries.length > 1 ? 
             filteredCountries.map((country) => ( //
-              <p key={country.cca3}>{country.name.common}</p> 
+              <div key={country.cca3}>
+                <p >
+                  {country.name.common} 
+                  <button onClick={() => setSearchCountry(country.name.common)}>show</button>
+                </p> 
+              </div>
             ))
         :
         // if there is only one country that matches the search, detailed information about the country is displayed
