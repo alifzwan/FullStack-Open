@@ -77,9 +77,9 @@ app.put('/api/blogs/:id', (request, response, next) => {
 app.post('/api/blogs', (request, response, next) => {
     const body = request.body
   
-    if (body.content === undefined) {
+    if (body.title === undefined) {
       return response.status(400).json({ 
-        error: 'content missing' 
+        error: 'Please Enter Title' 
       })
     }
   
