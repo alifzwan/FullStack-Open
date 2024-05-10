@@ -3,7 +3,6 @@ const mongoose = require('mongoose')
 mongoose.set("strictQuery", false) // This is to avoid the deprecation warning.
 
 const mongoUrl = process.env.mongoUrl
-console.log('Connecting to', mongoUrl)
 
 mongoose.connect(mongoUrl)
     .then(result => {
