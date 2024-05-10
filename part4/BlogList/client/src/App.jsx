@@ -42,7 +42,6 @@ const App = () => {
   console.log('render', blogs.length, 'blogs')
 
   
-
   const addBlog = (event) => {
     event.preventDefault()
     blogsService
@@ -51,10 +50,10 @@ const App = () => {
         setBlogs(blogs.concat(returnedBlog))
         showMessage(`Added ${newTitle} by ${newAuthor}`)
       })
-    setNewAuthor()
-    setNewTitle()
-    setNewUrl()
-    setNewLikes()
+    setNewAuthor('')
+    setNewTitle('')
+    setNewUrl('')
+    setNewLikes('')
   }
 
   const deleteBlog = (id) => {
@@ -67,6 +66,7 @@ const App = () => {
           .remove(id)
           .then(response => {
             setBlogs(blogs.filter(blog => blog.id !== id))
+            showMessage(`removed ${newTitle}`)
           })
       }
     }
