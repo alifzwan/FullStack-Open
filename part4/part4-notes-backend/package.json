@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=production node index.js",
-    "dev": "NODE_ENV=development nodemon index.js",
+    "dev": "nodemon index.js",
     "test": "NODE_ENV=test node --test"
   },
   "author": "Alif Zakwan",
@@ -22,7 +22,7 @@
     "@stylistic/eslint-plugin-js": "^1.8.0",
     "cross-env": "^7.0.3",
     "eslint": "^9.2.0",
-    "globals": "^15.1.0",
+    "globals": "^15.2.0",
     "nodemon": "^3.1.0",
     "supertest": "^7.0.0"
   }
