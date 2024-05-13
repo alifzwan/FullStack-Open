@@ -1,6 +1,4 @@
 import axios from 'axios'
-import App from '../App'
-
 
 const baseUrl = 'api/notes'
 
