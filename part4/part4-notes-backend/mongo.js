@@ -10,7 +10,7 @@ const content = process.argv[3] // the content of the note is taken from the com
 const important = process.argv[4] // the importance of the note is taken from the command line argument.
 
 const url = 
-`mongodb+srv://fullstack:${password}@cluster0.on1wn8q.mongodb.net/?
+`mongodb+srv://alifzakwan529:${password}@cluster0.fn4bzrt.mongodb.net/?
 retryWrites=true&w=majority&appName=Cluster0`
 
 mongoose.set("strictQuery", false) // This is to avoid the deprecation warning.
