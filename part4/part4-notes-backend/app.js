@@ -25,10 +25,9 @@ mongoose.connect(config.MONGODB_URI)
 app.use(cors()) // The cors middleware is used to allow requests from all origins.
 app.use(express.static('dist')) // The express.static middleware is used to serve static files from the dist directory.
 app.use(express.json()) // The express.json middleware is used to parse JSON payloads in the request body.
+
 app.use(middleware.requestLogger)
-
 app.use('/api/notes', notesRouter) // The notesRouter middleware is used to handle requests made to the /api/notes route.
-
 app.use(middleware.unknownEndpoint) // The unknownEndpoint middleware is used to catch requests made to unknown routes.
 app.use(middleware.errorHandler) // The errorHandler middleware is used to catch errors in request handling.
 
