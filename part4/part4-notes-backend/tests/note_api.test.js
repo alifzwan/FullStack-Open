@@ -17,25 +17,13 @@ const initialNotes =[
     {
         content: 'Browser can execute only JavaScript',
         important: true,
-    },
+    }
 ]
 
-beforeEach(async () => {
-    await Note.deleteMany([])
-    let noteObject = new Note(initialNotes[0])
-    await noteObject.save()
-    noteObject = new Note(initialNotes[1])
-    await noteObject.save()
-})
 
 
-
-
-
-
-
-test('notes are returned as json', async () => {
-    console.log(initialNotes)
+test.only('notes are returned as json', async () => {
+    // console.log(initialNotes)
     await api
         .get('/api/notes') //make a get request to /api/notes
         .expect(200) //expect status code 200
@@ -51,7 +39,18 @@ test('the first note is about HTTP methods', async () => {
     const response = await api.get('/api/notes') //make a get request to /api/notes
 
     const contents = response.body.map(e => e.content) //get the content of all notes
-    assert.strictEqual(contents.includes('HTML is easy', true))
+    console.log(contents)
+    assert(contents.includes("HTML is easy", "Browser can execute only JavaScript"))
+
+})
+
+
+beforeEach(async () => {
+    await Note.deleteMany({})
+    let noteObject = new Note(initialNotes[0])
+    await noteObject.save()
+    noteObject = new Note(initialNotes[1])
+    await noteObject.save()
 })
 
 
