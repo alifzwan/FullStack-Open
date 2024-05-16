@@ -1,21 +1,35 @@
 const notesRouter = require('express').Router() // The express.Router middleware is used to create a new router object.
 const Note = require('../models/note') 
 const User = require('../models/user')
+const jwt = require('jsonwebtoken')
+
+const getTokenFrom = request => {
+    const authorization = request.get('authorization')
+    if(authorization && authorization.startsWith('Bearer ')) {
+        return authorization.replace('Bearer ', '')
+    }
+    return null
+}
 
 
 // GET
 notesRouter.get('/', async (request, response, next) => { 
 
+    const notes = await Note
+        .find({}).populate('user', { username: 1, name: 1 })
+    
+    response.json(notes)
+
     // ASYNC/AWAIT
     // - Built on top of promises and provide a simpler and cleaner way to work with asynchronous code
     // - It makes it easier to read and write asynchronous code
-        try {
-            const notes = await Note.find({})
-            response.json(notes)
-        } catch (error){
-            next(error)
-            response.status(404).end()
-        }
+    // try {
+    //     const notes = await Note.find({})
+    //     response.json(notes)
+    // } catch (error){
+    //     next(error)
+    //     response.status(404).end()
+    // }
 
 
     // PROMISES
@@ -69,7 +83,14 @@ notesRouter.get('/:id', async (request, response, next) => {
 notesRouter.post('/', async (request, response, next) => {
     const body = request.body
 
-    const user = await User.findById(body.userId)
+    const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET)
+    if(!decodedToken.id) {
+        return response.status(401).json({
+            error: 'token missing or invalid'
+        })
+    }
+
+    const user = await User.findById(decodedToken.id)
   
     const note = new Note({
       content: body.content,
