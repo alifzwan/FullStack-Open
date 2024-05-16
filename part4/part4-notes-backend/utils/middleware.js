@@ -32,6 +32,11 @@ const errorHandler = (error, request, response, next) => {
             .json({ 
                 error: error.message 
             })
+    } else if(error.name === 'MongoServerError' && error.message.includes('duplicate key')) {
+        return response.status(400)
+            .json({ 
+                error: 'username must be unique' 
+            })
     }
     next(error)
 }
