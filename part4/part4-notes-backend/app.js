@@ -7,6 +7,8 @@ const app = express()
 const cors = require('cors') 
 
 const notesRouter = require('./controllers/notes') // The express.Router middleware is used to create a new router object.
+const usersRouter = require('./controllers/users')
+
 const middleware = require('./utils/middleware')
 const mongoose = require('mongoose')
 
@@ -28,6 +30,7 @@ app.use(express.json()) // The express.json middleware is used to parse JSON pay
 
 app.use(middleware.requestLogger)
 app.use('/api/notes', notesRouter) // The notesRouter middleware is used to handle requests made to the /api/notes route.
+app.use('/api/users', usersRouter) // The usersRouter middleware is used to handle requests made to the /api/users route.
 app.use(middleware.unknownEndpoint) // The unknownEndpoint middleware is used to catch requests made to unknown routes.
 app.use(middleware.errorHandler) // The errorHandler middleware is used to catch errors in request handling.
 
