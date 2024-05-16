@@ -1,5 +1,6 @@
 const notesRouter = require('express').Router() // The express.Router middleware is used to create a new router object.
 const Note = require('../models/note') 
+const User = require('../models/user')
 
 
 // GET
@@ -34,6 +35,7 @@ notesRouter.get('/:id', async (request, response, next) => {
 
     const notes = await Note.findById(request.params.id)
     
+    
     if (notes) {
         response.json(notes)
     } else {
@@ -66,13 +68,19 @@ notesRouter.get('/:id', async (request, response, next) => {
 // POST
 notesRouter.post('/', async (request, response, next) => {
     const body = request.body
+
+    const user = await User.findById(body.userId)
   
     const note = new Note({
       content: body.content,
-      important: body.important || false,
+      important: body.important === undefined ? false : body.important,
+      user: user.id
     })
 
     const savedNote = await note.save()
+    user.notes = user.notes.concat(savedNote.id)
+    await user.save()
+
     response.status(201).json(savedNote)
 
 
