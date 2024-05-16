@@ -12,7 +12,7 @@ const url = process.argv[5]
 const likes = process.argv[6]
 
 const MongoUrl = 
-`mongodb+srv://Blog:${password}@cluster0.0ovcfev.mongodb.net/?
+`mongodb+srv://Blog:${password}@cluster0.0ovcfev.mongodb.net/testBlog?
 retryWrites=true&w=majority&appName=Cluster0`
 
 mongoose.set('strictQuery', false)
