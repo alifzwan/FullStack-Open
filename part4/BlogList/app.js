@@ -7,6 +7,8 @@ const app = express()
 const cors = require('cors') 
 
 const blogRouter = require('./controllers/blogs')
+const usersRouter = require('./controllers/users')
+
 const middleware = require('./utils/middleware')
 const mongoose = require ('mongoose')
 
@@ -29,6 +31,7 @@ app.use(express.json()) // The express.json middleware is used to parse JSON pay
     
 app.use(middleware.requestLogger) // The requestLogger middleware is used to log information about the requests that are made to the server.
 app.use('/api/blogs', blogRouter)
+app.use('/api/users', usersRouter)
 app.use(middleware.unknownEndpoint) // The unknownEndpoint middleware is used to catch requests made to unknown routes.
 app.use(middleware.errorHandler) // The errorHandler middleware is used to catch errors in request handling.
 
