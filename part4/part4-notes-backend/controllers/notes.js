@@ -81,16 +81,19 @@ notesRouter.get('/:id', async (request, response, next) => {
 
 // POST
 notesRouter.post('/', async (request, response, next) => {
-    const body = request.body
+    const body = request.body // get the request body
 
+    // get the token from the request
     const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET)
+
+    // if token is missing or invalid, return 401 Unauthorized
     if(!decodedToken.id) {
         return response.status(401).json({
             error: 'token missing or invalid'
         })
     }
 
-    const user = await User.findById(decodedToken.id)
+    const user = await User.findById(body.userId) // find user by id
   
     const note = new Note({
       content: body.content,
