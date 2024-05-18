@@ -12,7 +12,7 @@ const url = process.argv[5]
 const likes = process.argv[6]
 
 const MongoUrl = 
-`mongodb+srv://Blog:${password}@cluster0.0ovcfev.mongodb.net/testBlog?
+`mongodb+srv://alifzakwan529:${password}@cluster0.czs910f.mongodb.net/?
 retryWrites=true&w=majority&appName=Cluster0`
 
 mongoose.set('strictQuery', false)
@@ -20,6 +20,7 @@ mongoose.set('strictQuery', false)
 mongoose.connect(MongoUrl)
 
 
+// BLOG
 const blogSchema = new mongoose.Schema({
     title: String,
     author: String,
@@ -51,5 +52,7 @@ Blog.find({}).then(result => {
 //     console.log(`Blog saved: ${result}`)
 //     mongoose.connection.close()
 // })
+
+
 
 
