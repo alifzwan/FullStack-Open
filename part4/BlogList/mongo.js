@@ -11,8 +11,12 @@ const author = process.argv[4]
 const url = process.argv[5]
 const likes = process.argv[6]
 
+// real = mongodb+srv://Blog:${password}@cluster0.0ovcfev.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+// test = mongodb+srv://alifzakwan529:206078@cluster0.czs910f.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
+
 const MongoUrl = 
-`mongodb+srv://alifzakwan529:${password}@cluster0.czs910f.mongodb.net/?
+`mongodb+srv://Blog:${password}@cluster0.0ovcfev.mongodb.net/?
 retryWrites=true&w=majority&appName=Cluster0`
 
 mongoose.set('strictQuery', false)
