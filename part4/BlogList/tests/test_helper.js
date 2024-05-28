@@ -1,6 +1,39 @@
 const Blog = require('../models/blog')
 const User = require('../models/user')
 
+// const initialBlogs = [
+//     {
+//         title: "French Riviera",
+//         author: "Mollie",
+//         url: "https://molliemooreblog.com/2018/08/french-riviera-travel-guide.html",
+//         likes: 99,
+//     },
+//     {
+//         title: "Thailand",
+//         author: "Alif Zakwan",
+//         url: "https://thailandstartshere.com/thailand-travel-blog/",
+//         likes: 99,
+//     },
+//     {
+//         title: "Paris",
+//         author: "Alif Zakwan",
+//         url: "https://everydayparisian.com/first-time-guide-to-paris/",
+//         likes: 99,
+//     },
+//     {
+//         title: "Dubai",
+//         author: "Alif Zakwan",
+//         url: "https://www.theblondeabroad.com/ultimate-dubai-travel-guide/",
+//         likes: 99,
+//     },
+//     {
+//         title: "Italy",
+//         author: "Alif Zakwan",
+//         url: "https://www.myitaliandiaries.com/",
+//         likes: 77,
+//     }
+// ]
+
 const initialBlogs = [
     {
         title: "French Riviera",
@@ -20,18 +53,6 @@ const initialBlogs = [
         url: "https://everydayparisian.com/first-time-guide-to-paris/",
         likes: 99,
     },
-    {
-        title: "Dubai",
-        author: "Alif Zakwan",
-        url: "https://www.theblondeabroad.com/ultimate-dubai-travel-guide/",
-        likes: 99,
-    },
-    {
-        title: "Italy",
-        author: "Alif Zakwan",
-        url: "https://www.myitaliandiaries.com/",
-        likes: 77,
-    }
 ]
 
 // nonExistingID - This function is used to generate a non-existing ID.
